@@ -173,24 +173,5 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-    private fun searchCountry() {
-        SearchView = findViewById(R.id.search_view)
-        SearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-               val filteredList=countryList.filter { country ->
-                   country.name.common.lowercase.contains()  }
-                if (query.isNotEmpty()){
-                    countryListAdapter.submitList(filteredList)
-                }
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                // if query text is change in that case we
-                // are filtering our adapter with
-                // new text on below line.
-                co.filter.filter(newText)
-                return false
-            }
-        })
     }
-    }
+}
