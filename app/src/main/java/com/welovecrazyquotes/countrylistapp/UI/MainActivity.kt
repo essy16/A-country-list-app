@@ -1,11 +1,16 @@
 package com.welovecrazyquotes.countrylistapp.UI
 
+import android.app.AlertDialog
+import android.app.Dialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.CheckBox
 import android.widget.ImageView
+import android.widget.SearchView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
@@ -16,11 +21,15 @@ import com.welovecrazyquotes.countrylistapp.UI.viewmodel.CountriesViewModel
 import com.welovecrazyquotes.countrylistapp.UI.viewmodel.CountriesViewModelFactory
 import com.welovecrazyquotes.countrylistapp.application.CountryListApplication
 import com.welovecrazyquotes.countrylistapp.databinding.ActivityMainBinding
+import com.welovecrazyquotes.countrylistapp.model.Country
 import com.welovecrazyquotes.countrylistapp.utils.Constants
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var countryListAdapter: CountryAdapter
+    private lateinit var SearchView: SearchView
+    private var countryList = mutableListOf<Country>()
+
     private var regionNames = mutableListOf<String>()
     private val viewModel: CountriesViewModel by viewModels {
         CountriesViewModelFactory(
@@ -72,6 +81,7 @@ class MainActivity : AppCompatActivity() {
         countryListAdapter = CountryAdapter(this) {
 
             viewModel.getCountry(it.name.common)
+
             val intent = Intent(this@MainActivity, CountryDetailActivity::class.java).apply {
                 putExtra(Constants.COUNTRY_COMMON_NAME, it)
 
@@ -81,7 +91,9 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launchWhenCreated {
             viewModel.countries.collect {
                 it?.let {
-                    countryListAdapter.submitList(it)
+                    countryListAdapter.submitList(it.sortedBy { country ->
+                        country.name.common
+                    })
                     Log.d("TAG", "bind: $it")
                     it.map { countryList ->
 
@@ -94,32 +106,91 @@ class MainActivity : AppCompatActivity() {
         }
         binding.recyclerCountries.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
+
             adapter = countryListAdapter
 
         }
         binding.layoutFilter.setOnClickListener {
+            var chckAF = findViewById<CheckBox>(R.id.Africa)
+            var chckAS = findViewById<CheckBox>(R.id.Asia)
+            var chckASTF = findViewById<CheckBox>(R.id.Austarlia)
+            var chckER = findViewById<CheckBox>(R.id.Europe)
+            var chckNA = findViewById<CheckBox>(R.id.NAmerica)
+            var chckSA = findViewById<CheckBox>(R.id.SAmerica)
+            var chckANT = findViewById<CheckBox>(R.id.Antartica)
+            if (chckAF.isChecked) {
+
+
+            }
+            if (chckAS.isChecked) {
+
+
+            }
+
+            if (chckASTF.isChecked) {
+
+
+            }
+
+            if (chckER.isChecked) {
+
+
+            }
+
+            if (chckNA.isChecked) {
+
+
+            }
+
+            if (chckSA.isChecked) {
+
+
+            }
+            if (chckANT.isChecked) {
+
+
+            }
 
 
         }
 
-    }
+        fun toggle(region: String) {
+            lifecycleScope.launchWhenCreated {
+                viewModel.countries.collect {
+                    it?.let {
+                        Log.d("TAG", "bind: $it")
+                        it.filter { country ->
+                            country.region == region
 
-    private fun toggle(region: String) {
-        lifecycleScope.launchWhenCreated {
-            viewModel.countries.collect {
-                it?.let {
-                    Log.d("TAG", "bind: $it")
-                    it.filter { country ->
-                        country.region == region
+                        }.also {
+                            countryListAdapter.submitList(it)
+                        }
 
-                    }.also {
-                        countryListAdapter.submitList(it)
                     }
-
                 }
             }
+
+
         }
 
+    private fun searchCountry() {
+        SearchView = findViewById(R.id.search_view)
+        SearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+               val filteredList=countryList.filter { country ->
+                   country.name.common.lowercase()  }
+                if (query.isNotEmpty()){
+                    countryListAdapter.submitList(filteredList)
+                }
+            }
 
+            override fun onQueryTextChange(newText: String?): Boolean {
+                // if query text is change in that case we
+                // are filtering our adapter with
+                // new text on below line.
+                co.filter.filter(newText)
+                return false
+            }
+        })
     }
-}
+    }

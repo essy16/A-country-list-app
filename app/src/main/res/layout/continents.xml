@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/tv_prompt"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+   android:textSize="20sp"
+    android:text="Choose continent"/>
+    /
+
+    <CheckBox
+        android:id="@+id/Africa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Africa" />
+
+    <CheckBox
+        android:id="@+id/Europe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Europe" />
+
+    <CheckBox
+        android:id="@+id/Asia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Asia" />
+
+    <CheckBox
+        android:id="@+id/NAmerica"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="North America" />
+
+    <CheckBox
+        android:id="@+id/SAmerica"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="South America" />
+
+    <CheckBox
+        android:id="@+id/Antartica"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Antartica" />
+
+    <CheckBox
+        android:id="@+id/Austarlia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Australia" />
+</LinearLayout>
