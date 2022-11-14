@@ -178,7 +178,7 @@ class MainActivity : AppCompatActivity() {
         SearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                val filteredList=countryList.filter { country ->
-                   country.name.common.lowercase()  }
+                   country.name.common.lowercase.contains()  }
                 if (query.isNotEmpty()){
                     countryListAdapter.submitList(filteredList)
                 }
