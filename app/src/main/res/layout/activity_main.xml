@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+<androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1"
             android:layout_margin="10dp">
 
             <TextView
@@ -20,6 +24,7 @@
                 android:layout_height="match_parent"
                 android:fontFamily="@font/pacifico"
                 android:text="Explore"
+                android:layout_weight=".008"
                 android:textSize="20sp" />
 
             <TextView
@@ -27,87 +32,221 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pacifico"
                 android:text="."
-                android:textColor="#ff0000"
+                android:layout_weight=".95"
+                android:textColor="#FF5722"
                 android:textSize="20sp" />
 
             <ImageView
                 android:id="@+id/image_button"
                 android:layout_width="30dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="250dp"
+                android:layout_weight="0.0"
+                android:layout_height="30dp"
                 android:background="@drawable/circle"
+                android:layout_gravity="end"
                 android:scaleType="centerCrop"
-                android:src="@drawable/moon_dark" />
+                app:tint="?attr/colorOnSurface"
+                />
 
 
         </LinearLayout>
 
-       <SearchView
+        <androidx.appcompat.widget.SearchView
             android:id="@+id/search_view"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:queryHint="Search here"
-            app:queryBackground="@android:color/transparent"/>
+            android:textAlignment="center"
+            app:defaultQueryHint="Search Country"
+            app:iconifiedByDefault="false"
+            android:focusableInTouchMode="true"
+            android:queryHint="Search here"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_margin="20dp">
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:layout_margin="10dp">
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/globe_icon" />
 
-            <TextView
+
+            <com.google.android.material.button.MaterialButton
+               android:id="@+id/btnLanguage"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                app:icon="@drawable/ic_language"
+                app:iconTint="?attr/colorOnSurface"
+                android:textColor="?attr/colorOnSurface"
                 android:text="EN"
-
                 android:textSize="20sp" />
 
-            <androidx.cardview.widget.CardView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="250dp">
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/layout_filter">
-
-                    <ImageView
-
-                        android:layout_width="30dp"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/filter_icom" />
-
-                    <Button
-                        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:background="@color/black"
-                        android:text="FILTER"
-                        android:textSize="6sp"
-
-
-                        />
-
-                </LinearLayout>
-
-
-            </androidx.cardview.widget.CardView>
-
+                android:layout_weight="0.8"
+                android:orientation="horizontal"
+                android:id="@+id/layout_filter">
+            </LinearLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnFilter"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Filter"
+                android:layout_weight="0.1"
+                app:icon="@drawable/ic__filter"
+                app:iconTint="?attr/colorOnSurface"
+                android:textAllCaps="false"
+                android:textColor="?attr/colorOnSurface"
+                />
 
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_countries"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="10dp"
+            tools:listitem="@layout/country_item"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone" />
 
     </LinearLayout>
+</androidx.core.widget.NestedScrollView>
+   <FrameLayout
+       android:id="@+id/filterSheet"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+       android:paddingHorizontal="10dp"
+       android:paddingTop="16dp"
+       android:background="@drawable/rounded_corner_top"
+       >
+       <androidx.core.widget.NestedScrollView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:fillViewport="true">
+       <androidx.constraintlayout.widget.ConstraintLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent">
 
-</ScrollView>
+           <TextView
+               android:id="@+id/textView"
+               style="@style/TextAppearance.MaterialComponents.Body1"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Filter"
+               android:textSize="20sp"
+               android:textStyle="bold"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toTopOf="parent" />
+
+           <ImageButton
+               android:id="@+id/closeFilter"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginEnd="10dp"
+               android:src="@drawable/ic_close"
+               app:layout_constraintBottom_toBottomOf="@+id/textView"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintTop_toTopOf="@+id/textView"
+               app:tint="?attr/colorOnSurface" />
+           <TextView
+               android:id="@+id/continentsToggle"
+               style="@style/TextAppearance.MaterialComponents.Body1"
+               android:layout_width="0dp"
+               android:layout_marginEnd="10dp"
+               android:layout_height="wrap_content"
+               android:minHeight="48dp"
+               android:gravity="center_vertical"
+               android:layout_marginTop="10dp"
+               app:drawableTint="?attr/colorOnSurface"
+               android:text="Continents"
+               android:drawableEnd="@drawable/ic_arrow_down"
+               android:textSize="20sp"
+               android:textStyle="bold"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+           <androidx.recyclerview.widget.RecyclerView
+               android:id="@+id/rvContinents"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:scrollbars="none"
+               android:visibility="gone"
+               android:layout_marginTop="8dp"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/continentsToggle"
+               tools:itemCount="6"
+               tools:listitem="@layout/filter_item" />
+
+           <TextView
+               android:id="@+id/timeZoneToggle"
+               style="@style/TextAppearance.MaterialComponents.Body1"
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:minHeight="48dp"
+               android:layout_marginTop="10dp"
+               android:layout_marginEnd="10dp"
+               android:text="Time Zones"
+               android:gravity="center_vertical"
+               android:textSize="20sp"
+               android:textStyle="bold"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/rvContinents"
+               app:drawableEndCompat="@drawable/ic_arrow_down" />
+           <androidx.recyclerview.widget.RecyclerView
+               android:id="@+id/rvTimeZones"
+               android:layout_width="match_parent"
+               android:layout_height="250dp"
+               android:visibility="gone"
+               android:layout_marginTop="8dp"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/timeZoneToggle"
+               tools:itemCount="6"
+               tools:listitem="@layout/filter_item" />
+           <com.google.android.material.button.MaterialButton
+               android:id="@+id/btnReset"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:minHeight="48dp"
+               android:layout_marginTop="10dp"
+               style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+               android:textAllCaps="false"
+               android:text="Reset"
+               app:strokeColor="?attr/colorOnSurface"
+               android:textColor="?attr/colorOnSurface"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@id/rvTimeZones"/>
+           <com.google.android.material.button.MaterialButton
+               android:id="@+id/btnShowResults"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:minHeight="48dp"
+               android:layout_marginTop="10dp"
+              android:textAllCaps="false"
+               android:text="Show results"
+               android:backgroundTint="#FF5722"
+               android:textColor="@color/white"
+               app:layout_constraintTop_toBottomOf="@id/rvTimeZones"
+               app:layout_constraintEnd_toEndOf="parent"
+               />
+
+
+       </androidx.constraintlayout.widget.ConstraintLayout>
+   </androidx.core.widget.NestedScrollView>
+   </FrameLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

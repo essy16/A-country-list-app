@@ -37,6 +37,7 @@ class CountryAdapter(private val context: Context, private val onItemClicked: (C
                     .load(country.flags.png)
                     .into(flag)
                 countryy.text = country.name.common
+                capital.text = country.capital?.get(0)
             }
         }
     }
