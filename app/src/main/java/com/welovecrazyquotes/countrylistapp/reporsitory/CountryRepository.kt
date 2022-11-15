@@ -4,9 +4,10 @@ import com.welovecrazyquotes.countrylistapp.Data.RestcountryAPIservice
 import com.welovecrazyquotes.countrylistapp.model.Country
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import retrofit2.Response
 
-class CountryReporsitory (private val api:RestcountryAPIservice){
-    fun getAllCountries():Flow<List<Country>>{
+class CountryRepository (private val api:RestcountryAPIservice){
+    fun getAllCountries():Flow<Response<List<Country>>>{
         return flow {
             emit(api.getAllCountries())
 
